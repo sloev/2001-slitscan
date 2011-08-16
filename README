@@ -1,0 +1,10 @@
+2001-slitscan README
+
+using the processing 1.5 ide and newest test gsvideo library.
+has been tested only on ubuntu linux.
+
+put a video in the data directory when and put the filename in the 2001-slitscan.pde file where it says "test.avi".
+
+then use controls z and x plus mouse activity two moprh the video in slitscan space warp ways.
+
+

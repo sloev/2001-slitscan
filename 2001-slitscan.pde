@@ -1,3 +1,10 @@
+/**
+ * 2001-slitscan
+ *
+ * GSVideo version by Andres Colubri.
+ * 
+ * slitscans a video file or gstreamer pipe to look like 2001.
+ */
 import codeanticode.gsvideo.*;
 
 PImage img, img2, img3;
@@ -13,31 +20,8 @@ GSMovie movie;
 public void setup() {
   size(641, 480);
   frameRate(200);
-  /*
-  // List functionality still not ready on Linux
-   String[] cameras = GSCapture.list();
-   
-   if (cameras.length == 0)
-   {
-   println("There are no cameras available for capture.");
-   exit();
-   } else {
-   println("Available cameras:");
-   for (int i = 0; i < cameras.length; i++)
-   println(cameras[i]);
-   cam = new GSCapture(this, 640, 480, cameras[0]);
-   }
-   
-   However, different cameras can be selected by using their device file:
-   cam = new GSCapture(this, 640, 480, "/dev/video0");
-   cam = new GSCapture(this, 640, 480, "/dev/video1");
-   etc.
-   */
 
-  //cam = new GSCapture(this, width, height);
-  //cam.start();  
-
-  movie = new GSMovie(this, "balloon.ogg");
+  movie = new GSMovie(this, "test.avi");
   movie.play();
   movie.loop();
   movie.speed(10);
@@ -75,24 +59,25 @@ public void movieEvent(GSMovie movie) {
 public void draw() {
 
   img=movie.get();
-  //tint(255, 100);
-  //blend(0, 0, width, height, 0, 0, width, height, BLEND);
 
-  //pushMatrix();
-  //  translate(width/2, height/2);
-  //rotate(sin(millis()%10000)*PI*2);
-  //image(movie.get(width/2-1, 0, 2, height), -1, -height/2);
-  //den gamle:
+  if (keyPressed==true && key=='z') {
+    xspeed=int(map(mouseX, 0, width, 0, width/3));
+    yspeed=int(map(mouseY, 0, height, -height/4, height/4));
+  }
+  if (keyPressed==true && key=='x') {
+    speedwidth=int(map(mouseX, 0, width, 1, width/3));
+  }
 
   blend(img2, 0, 0, width/2, height, 
   width/2, 0, width/2, height, BLEND);
 
   blend(img3, 0, 0, width/2, height, 
-  -1, 0, width/2, height, BLEND);
+  0, 0, width/2, height, BLEND);
 
   blend(movie, movie.width/2-speedwidth/2, 0, speedwidth, movie.height, 
   width/2-speedwidth/2, 0, speedwidth, height, BLEND);
 
-  img2 = get(width/2-speedwidth/2, 0, width/2-xspeed, height);
-  img3 = get(xspeed+speedwidth/2, 0, width/2-xspeed, height);
+  img2 = get(width/2-speedwidth/2, -yspeed, width/2-xspeed, height-yspeed);
+  img3 = get(xspeed+speedwidth/2, -yspeed, width/2-xspeed, height-yspeed);
 }
+
